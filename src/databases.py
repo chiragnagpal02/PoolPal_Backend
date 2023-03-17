@@ -21,3 +21,6 @@ class Passengers(db.Model):
     
     def __repr__(self) -> str:
         return f'Request >>> {self.project}'
+
+
+
