@@ -59,8 +59,6 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     
-
-
     return redirect("/auth/protected_area")
 
 
