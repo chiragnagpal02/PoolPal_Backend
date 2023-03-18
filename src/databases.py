@@ -7,8 +7,8 @@ db = SQLAlchemy()
 class Carpool(db.Model):
     __tablename__ = 'carpooling'
 
-    CPID = db.Column(db.String(13), primary_key=True, autoincrement=True)
-    PID = db.Column(db.String(64), nullable=False)
+    CPID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    PID = db.Column(db.Integer, nullable=False)
     DID = db.Column(db.Integer, nullable=False)
     DriverFee = db.Column(db.Float(precision=2), nullable=False)
     DateTime = db.Column(db.DateTime, default=datetime.now())
@@ -20,7 +20,7 @@ class Carpool(db.Model):
 class Driver(db.Model):
     __tablename__ = 'driver'
 
-    DID = db.Column(db.Float(precision=2), nullable=False, autoincrement=True)
+    DID = db.Column(db.db.Integer, primary_key=True, autoincrement=True)
     DName = db.Column(db.String(64), nullable=False)
     DAge = db.Column(db.Integer, nullable=False)
     DGender = db.Column(db.String(1), nullable=False)
@@ -45,5 +45,67 @@ class Passengers(db.Model):
     def __repr__(self) -> str:
         return f'Request >>> {self.project}'
 
+# Review DB
 
+class Review(db.Model):
+    __tablename__ = 'review'
+
+    CPID = db.Column(db.Integer, nullable=False)
+    PID = db.Column(db.Integer, nullable=False)
+    DID = db.Column(db.Integer, nullable=False)
+    DateTime = db.Column(db.DateTime, default=datetime.now())
+    RRating = db.Column(db.Integer, nullable=False)
+    RDesc = db.Column(db.String(64), nullable=False)
+    Status = db.Column(db.String(64), nullable=False)
+    Price = db.Column(db.Float(precision=2), nullable=False)
+
+    __table_args__ = (
+        db.PrimaryKeyConstraint('CPID', 'PID', 'DID'),
+    )
+
+# Dispute DB
+
+class Dispute(db.Model):
+    __tablename__ = 'dispute'
+
+    DPID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    CPID = db.Column(db.Integer, nullable=False)
+    PID = db.Column(db.Integer, nullable=False)
+    DID = db.Column(db.Integer, nullable=False)
+    SID = db.Column(db.Integer, nullable=False)
+    DPDescript = db.Column(db.String(64), nullable=False)
+    DateTime = db.Column(db.DateTime, default=datetime.now())
+
+# Staff DB
+
+class Staff(db.Model):
+    __tablename__ = 'staff'
+
+    SID = db.Column(db.Integer, nullable=False)
+    SName = db.Column(db.String(64), nullable=False)
+
+# Payment Log DB
+
+class PaymentLog(db.Model):
+    __tablename__ = 'PaymentLog'
+
+    PmID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    CID = db.Column(db.Integer, nullable=False)
+    PID = db.Column(db.Integer, nullable=False)
+    CPrice = db.Column(db.Float(precision=2), nullable=False)
+    Status = db.Column(db.String(64), nullable=False)
+    DateTime = db.Column(db.DateTime, default=datetime.now())
+
+# Pricing DB
+
+class Pricing(db.Model):
+    __tablename__ = 'pricing'
+
+    CPID = db.Column(db.Integer, nullable=False)
+    DateTime = db.Column(db.DateTime, default=datetime.now())
+    CPrice = db.Column(db.Float(precision=2), nullable=False)
+
+    __table_args__ = (
+        db.PrimaryKeyConstraint('CPID', 'DateTime'),
+    )
 
