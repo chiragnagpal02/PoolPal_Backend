@@ -11,7 +11,7 @@ import google.auth.transport.requests
 auth = Blueprint('auth', __name__, url_prefix='/auth') 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "10" # to allow Http traffic for local dev
 
-GOOGLE_CLIENT_ID = "615107743513-808o8ccs2o1b5j1p7bnu8v3ojlkkb986.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = "615107743513-os2rdhlfh38ged8a4cuoq4rok5c7dsm4.apps.googleusercontent.com"
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
 flow = Flow.from_client_secrets_file(
@@ -34,6 +34,7 @@ def login_is_required(function):
 @auth.route("/login")
 def login():
     authorization_url, state = flow.authorization_url()
+    print(authorization_url)
     session["state"] = state
     return redirect(authorization_url)
 
@@ -49,6 +50,7 @@ def callback():
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
+    print(token_request)
 
     id_info = id_token.verify_oauth2_token(
         id_token=credentials._id_token,
@@ -58,7 +60,8 @@ def callback():
     session['id_info'] = id_info
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
-    
+
+    print(session["name"])
     return redirect("/auth/protected_area")
 
 
