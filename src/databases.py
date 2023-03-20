@@ -69,11 +69,11 @@ class Review(db.Model):
     CPID = db.Column(db.Integer, db.ForeignKey('carpooling.CPID'), nullable=False)
     PID = db.Column(db.Integer, db.ForeignKey('passengers.PID'), nullable=False)
     DID = db.Column(db.Integer, db.ForeignKey('driver.DID'), nullable=False)
-    DateTime = db.Column(db.DateTime, default=datetime.now())
-    RRating = db.Column(db.Integer, nullable=False)
-    RDesc = db.Column(db.String(64), nullable=False)
-    # Status = db.Column(db.String(64), nullable=False)
-    # Price = db.Column(db.Float(precision=2), nullable=False)
+    #DateTime = db.Column(db.DateTime, default=datetime.now())
+    PRating = db.Column(db.Integer)
+    DRating = db.Column(db.Integer)
+    PDescription = db.Column(db.String(100))
+    DDescription = db.Column(db.String(100))
 
     __table_args__ = (
         db.PrimaryKeyConstraint('CPID', 'PID', 'DID'),
@@ -108,8 +108,9 @@ class PaymentLog(db.Model):
 class Staff(db.Model):
     __tablename__ = 'staff'
 
-    SID = db.Column(db.Integer, nullable=False, primary_key=True)
-    SName = db.Column(db.String(64), nullable=False)
+    SID = db.Column(db.Integer, primary_key=True, nullable=False)
+    SName = db.Column(db.String(100), nullable=False)
+    Gender = db.Column(db.String(1), nullable=False)
 
 # Pricing DB
 class Pricing(db.Model):
