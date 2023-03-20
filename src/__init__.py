@@ -6,6 +6,7 @@ from src.auth import auth
 from src.carpool import carpool
 from src.driver import driver
 from src.passenger import passenger
+from src.googlemap import googleMap
 import os
 
 def create_app():
@@ -25,5 +26,6 @@ def create_app():
     app.register_blueprint(tryme)
     app.register_blueprint(payment)
     app.register_blueprint(auth)
+    app.register_blueprint(googleMap)
 
     return app
