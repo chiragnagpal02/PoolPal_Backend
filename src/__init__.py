@@ -1,5 +1,6 @@
 from flask import Flask
 from src.trial import tryme
+from src.stripe import payment
 
 # from src.databases import db
 from src.auth import auth
@@ -17,7 +18,7 @@ def create_app():
     # db.init_app(app)
 
     app.register_blueprint(tryme)
-    
+    app.register_blueprint(payment)
     app.register_blueprint(auth)
 
     return app
